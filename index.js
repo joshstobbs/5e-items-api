@@ -107,7 +107,7 @@ function generateStrengthRequired(strength) {
 }
 
 function generateStealthDisadvantage(stealth) {
-    return stealth === "1" || "YES" ? true : null
+    return stealth === "1" || stealth === "YES" ? true : null
 }
 
 function generateDamageRolls(rollOne, rollTwo) {
@@ -137,10 +137,6 @@ function generateDamageType(type) {
 }
 
 function generateProficienciesRequired(text) {
-    // get proficiency node from text array
-    // if that exists proceed with splitting
-    // if it doesn't continue to print out null
-
     let proficiencies = text.filter((node) => {
         if (!_.isEmpty(node)) return node.includes("Proficiency: ")
     })[0]
@@ -177,31 +173,5 @@ function buildItemData(data) {
     }
 }
 
-let keys = [
-    "name", // done
-    "type", // done
-    "weight", // done
-    "text", // done (as description)
-    "value", // done
-    "roll", // done
-    "ac", // done
-    "strength", // done (as strength_required)
-    "stealth", // done (as stealth_disadvantage)
-    "dmg1", // done (as damage)
-    "dmg2", // done (as damage)
-    "dmgType", // done (as damage_type)
-    "property", // done
-    "range", // done
-    "magic", // done
-    "detail", // done (as rarity)
-    "modifier", // not done, not needed yet
-]
-
 let api = items.map(buildItemData)
-
-// let item = items[5]
-// console.log(items.filter((item) => item.hasOwnProperty("dmgType"))[600])
-// console.log(_.toNumber(items[5].value))
-// console.log(buildItemData(item))
-// console.log(buildItemData(items.filter((item) => item.name === "Longbow")[0]))
-// console.log(items.filter((item) => item.name === "Longbow")[0])
+fs.writeFileSync("./items.json", JSON.stringify(api, null, 4))
